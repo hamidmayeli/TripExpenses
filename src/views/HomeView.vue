@@ -2,15 +2,19 @@
 import CostInput from '../components/CostInput.vue'
 import CostList from '../components/CostList.vue';
 import CostSummary from '../components/CostSummary.vue';
-import { getRecords } from '@/store';
+import { getRecords, removeRecord } from '@/store';
 import { ref } from 'vue';
 
 const costs = ref<CostData[]>(getRecords());
 
-console.log('Costs:', costs.value);
-
 function handleSave(data: CostData) {
   costs.value.push(data);
+}
+
+function handleRemove(index: number) {
+  removeRecord(index);
+  // refresh the costs list
+  costs.value = getRecords();
 }
 
 </script>
@@ -18,7 +22,7 @@ function handleSave(data: CostData) {
 <template>
   <main>
     <CostInput v-on:save="handleSave" />
-    <CostList :costs="costs" />
+    <CostList :costs="costs" v-on:remove="handleRemove" />
     <CostSummary :costs="costs" />
   </main>
 </template>

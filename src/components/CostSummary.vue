@@ -4,13 +4,13 @@
     <input v-model.number="eurToGbp" type="number" step="0.0001" min="0" class="border p-2 rounded w-full mb-6"
       placeholder="Enter EUR to GBP rate" />
 
-    <h2 class="text-xl font-bold mb-4">Payments Summary</h2>
+    <h2 class="text-xl font-bold pt-10 mb-4">Payments Summary</h2>
     <div v-for="person in allPeople" :key="person" class="mb-2">
       <strong>{{ person }}</strong> paid: £{{ actualPaid[person]?.toFixed(2) || '0.00' }}
       (should be £{{ fairShare[person]?.toFixed(2) || '0.00' }})
     </div>
 
-    <h2 class="text-xl font-bold mt-6 mb-4">Balances to Settle</h2>
+    <h2 class="text-xl font-bold pt-10 mb-4">Balances to Settle</h2>
     <div v-for="person in allPeople" :key="person" class="mb-1">
       <template v-if="balances[person] > 0">
         {{ person }} should receive: £{{ balances[person].toFixed(2) }}

@@ -30,4 +30,10 @@ const getRecords = () => {
   return JSON.parse(localStorage.getItem('records') || '[]') as CostData[]
 }
 
-export { saveRecord, getRecords }
+const removeRecord = (index: number) => {
+  const records = JSON.parse(localStorage.getItem('records') || '[]') as CostData[]
+  records.splice(index, 1)
+  localStorage.setItem('records', JSON.stringify(records))
+}
+
+export { saveRecord, getRecords, removeRecord }

@@ -1,7 +1,7 @@
 <template>
   <div class="p-4 space-y-4">
     <!-- Top Section: Payer, Amount, Currency -->
-    <div class="flex gap-4 items-center">
+    <div class="flex gap-4 items-center flex-wrap">
       <label class="flex flex-col">
         Who paid
         <input v-model="payer" class="border p-1" />
@@ -25,7 +25,7 @@
     <!-- Shares Section -->
     <div>
       <p>Shares</p>
-      <div v-for="(share, index) in shares" :key="index" class="flex gap-4 mt-2 items-center">
+      <div v-for="(share, index) in shares" :key="index" class="flex flex-wrap gap-4 mt-2 items-center border-t-2 py-2">
         <label class="flex flex-col">
           Who
           <input v-model="share.who" class="border p-1" />
