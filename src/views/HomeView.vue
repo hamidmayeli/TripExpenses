@@ -1,9 +1,24 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import CostInput from '../components/CostInput.vue'
+import CostList from '../components/CostList.vue';
+import CostSummary from '../components/CostSummary.vue';
+import { getRecords } from '@/store';
+import { ref } from 'vue';
+
+const costs = ref<CostData[]>(getRecords());
+
+console.log('Costs:', costs.value);
+
+function handleSave(data: CostData) {
+  costs.value.push(data);
+}
+
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <CostInput v-on:save="handleSave" />
+    <CostList :costs="costs" />
+    <CostSummary :costs="costs" />
   </main>
 </template>
