@@ -18,8 +18,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'robots.txt'],
       manifest: {
-        name: 'My Vue PWA',
-        short_name: 'VuePWA',
+        name: 'Trip Expenses',
+        short_name: 'Expenses',
         start_url: '/',
         display: 'standalone',
         background_color: '#ffffff',
