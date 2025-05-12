@@ -10,3 +10,10 @@ type CostData = {
   what: string
   shares: Share[]
 }
+
+interface Log {
+  date: Date
+  type: 'info' | 'error' | 'warning'
+  message: string
+  data: object
+}

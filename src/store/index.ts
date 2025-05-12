@@ -36,4 +36,27 @@ const removeRecord = (index: number) => {
   localStorage.setItem('records', JSON.stringify(records))
 }
 
-export { saveRecord, getRecords, removeRecord }
+const addLog = (type: 'info' | 'error' | 'warning', message: string, data: object) => {
+  const logs = JSON.parse(sessionStorage.getItem('logs') || '[]') as Log[]
+  const log: Log = {
+    date: new Date(),
+    type,
+    message,
+    data,
+  }
+  logs.push(log)
+  sessionStorage.setItem('logs', JSON.stringify(logs))
+}
+
+const getLogs = () => {
+  const logs = JSON.parse(sessionStorage.getItem('logs') || '[]') as Log[]
+
+  return logs.reverse().map((log) => {
+    return {
+      ...log,
+      date: new Date(log.date),
+    }
+  })
+}
+
+export { saveRecord, getRecords, removeRecord, addLog, getLogs }
