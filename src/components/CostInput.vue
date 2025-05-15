@@ -24,7 +24,7 @@
 
     <!-- Shares Section -->
     <div>
-      <p>Shares</p>
+      <p>Shares (remaining {{ remaining }})</p>
       <div v-for="(share, index) in shares" :key="index" class="flex flex-wrap gap-4 mt-2 items-center border-t-2 py-2">
         <label class="flex flex-col">
           Who
@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { saveRecord } from '@/store'
 
 const emit = defineEmits<{
@@ -61,6 +61,9 @@ const amount = ref<number | null>(null);
 const currency = ref('EUR');
 const currencies = ['EUR', 'GBP'];
 const what = ref('');
+const remaining = computed(() => {
+  return (amount.value ?? 0) - shares.value.reduce((acc, share) => acc + (share.amount || 0), 0);
+});
 
 const shares = ref<Share[]>([
   { who: '', amount: null }
