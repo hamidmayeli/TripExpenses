@@ -28,6 +28,10 @@
 <script lang="ts" setup>
 import { ref, computed, defineProps, onMounted } from 'vue'
 
+interface ExchangeRateResponse {
+  rates: Record<string, number>
+}
+
 const props = defineProps<{
   costs: CostData[]
 }>()
@@ -36,19 +40,9 @@ const eurToGbp = ref(0.85) // Default; will update via ECB
 
 onMounted(async () => {
   try {
-    const response = await fetch('https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml')
-    const text = await response.text()
-    const parser = new DOMParser()
-    const xmlDoc = parser.parseFromString(text, 'application/xml')
-    const cubes = xmlDoc.getElementsByTagName('Cube')
-    for (let i = 0; i < cubes.length; i++) {
-      const cube = cubes[i]
-      if (cube.getAttribute('currency') === 'GBP') {
-        const rate = cube.getAttribute('rate')
-        if (rate) eurToGbp.value = parseFloat(rate)
-        break
-      }
-    }
+    const response = await fetch('https://api.exchangerate-api.com/v4/latest/EUR')
+    const json = await response.json() as ExchangeRateResponse
+    eurToGbp.value = json.rates.GBP
   } catch (e) {
     console.error('Could not fetch exchange rate:', e)
   }

@@ -24,8 +24,8 @@
 
     <!-- Shares Section -->
     <div>
-      <p>Shares (remaining {{ remaining }})</p>
-      <div v-for="(share, index) in shares" :key="index" class="flex flex-wrap gap-4 mt-2 items-center border-t-2 py-2">
+      <p class="border-b-2">Shares (remaining {{ remaining }})</p>
+      <div v-for="(share, index) in shares" :key="index" class="flex flex-wrap gap-4 mt-2 items-center py-2">
         <label class="flex flex-col">
           Who
           <input v-model="share.who" class="border p-1" />
@@ -38,11 +38,8 @@
       </div>
     </div>
 
-    <!-- Add Share -->
-    <button @click="addShare" class="text-blue-600 underline">+ new item</button>
-
-    <!-- Save -->
-    <div>
+    <div class="flex gap-4 items-center">
+      <button @click="addShare" class="bg-gray-600 text-white px-3 py-1 rounded">+ new item</button>
       <button @click="save" class="bg-green-600 text-white px-3 py-1 rounded">Save</button>
     </div>
   </div>

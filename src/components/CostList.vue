@@ -4,7 +4,7 @@
       class="border rounded-xl shadow-sm p-4 space-y-2 flex flex-row justify-between items-center text-gray-300">
       <div class="grow-1 flex-1">
         <div class="text-lg font-semibold">
-          Payer: {{ cost.payer }} —
+          {{ cost.payer }} —
           <span class="text-green-600">
             {{ cost.amount ?? 'N/A' }} {{ cost.currency }}
           </span>
