@@ -7,7 +7,8 @@
           {{ cost.payer }} —
           <span class="text-green-600">
             {{ cost.amount ?? 'N/A' }} {{ cost.currency }}
-          </span>
+	          </span> 
+          ({{ cost.what }})
         </div>
         <div class="flex gap-4">
           <div class="text-sm font-medium text-gray-500">Shares:</div>
