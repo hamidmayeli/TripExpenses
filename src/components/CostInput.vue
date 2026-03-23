@@ -42,12 +42,14 @@
       <button @click="addShare" class="bg-gray-600 text-white px-3 py-1 rounded">+ new item</button>
       <button @click="save" class="bg-green-600 text-white px-3 py-1 rounded">Save</button>
     </div>
+    <ConfirmDialog ref="dialog" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { saveRecord } from '@/store'
+import ConfirmDialog from './ConfirmDialog.vue'
 
 const emit = defineEmits<{
   (e: 'save', data: CostData): void;
@@ -61,6 +63,8 @@ const what = ref('');
 const remaining = computed(() => {
   return (amount.value ?? 0) - shares.value.reduce((acc, share) => acc + (share.amount || 0), 0);
 });
+
+const dialog = ref<InstanceType<typeof ConfirmDialog>>()
 
 const shares = ref<Share[]>([
   { who: '', amount: null }
@@ -95,7 +99,7 @@ function save() {
     what.value = '';
     shares.value = [{ who: '', amount: null }];
   } catch (error) {
-    alert('Error saving record\r\n' + error);
+    dialog.value?.alert('Error saving record\n' + error);
     return;
   }
 }

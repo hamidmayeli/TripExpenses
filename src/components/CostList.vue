@@ -7,7 +7,7 @@
           {{ cost.payer }} —
           <span class="text-green-600">
             {{ cost.amount ?? 'N/A' }} {{ cost.currency }}
-	          </span> 
+	          </span>
           ({{ cost.what }})
         </div>
         <div class="flex gap-4">
@@ -23,26 +23,28 @@
         <button @click="removeItem(index)" class="text-red-500">✖</button>
       </div>
     </div>
+    <ConfirmDialog ref="dialog" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue'
+import { ref } from 'vue'
+import ConfirmDialog from './ConfirmDialog.vue'
 
 const emit = defineEmits<{
   (e: 'remove', index: number): void;
 }>();
 
 const props = defineProps<{ costs: CostData[] }>()
+const dialog = ref<InstanceType<typeof ConfirmDialog>>()
 
-function removeItem(index: number) {
+async function removeItem(index: number) {
   const { costs } = props
+  const confirmed = await dialog.value?.confirm(
+    `Are you sure you want to delete this item?\n${costs[index].payer} paid ${costs[index].amount} ${costs[index].currency}`
+  )
+  if (!confirmed) return
 
-  // get confirmation from the user
-  const confirmDelete = confirm(`Are you sure you want to delete this item?\r\n${costs[index].payer} paid ${costs[index].amount} ${costs[index].currency}`);
-  if (!confirmDelete) return;
-
-  // emit the remove event to the parent component
   emit('remove', index)
 }
 
