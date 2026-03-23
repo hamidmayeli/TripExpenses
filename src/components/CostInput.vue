@@ -41,18 +41,24 @@
     <div class="flex gap-4 items-center">
       <button @click="addShare" class="bg-gray-600 text-white px-3 py-1 rounded">+ new item</button>
       <button @click="save" class="bg-green-600 text-white px-3 py-1 rounded">Save</button>
+      <button v-if="editData" @click="emit('cancel')" class="bg-gray-600 text-white px-3 py-1 rounded">Cancel</button>
     </div>
     <ConfirmDialog ref="dialog" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { saveRecord } from '@/store'
+import { computed, ref, watch } from 'vue';
+import { saveRecord, validateRecord } from '@/store'
 import ConfirmDialog from './ConfirmDialog.vue'
 
+const props = defineProps<{
+  editData?: CostData
+}>()
+
 const emit = defineEmits<{
-  (e: 'save', data: CostData): void;
+  (e: 'save', data: CostData): void
+  (e: 'cancel'): void
 }>();
 
 const payer = ref('');
@@ -69,6 +75,16 @@ const dialog = ref<InstanceType<typeof ConfirmDialog>>()
 const shares = ref<Share[]>([
   { who: '', amount: null }
 ]);
+
+watch(() => props.editData, (data) => {
+  if (data) {
+    payer.value = data.payer
+    amount.value = data.amount
+    currency.value = data.currency
+    what.value = data.what
+    shares.value = data.shares.map((s) => ({ ...s }))
+  }
+}, { immediate: true })
 
 function addShare() {
   shares.value.push({ who: '', amount: null });
@@ -88,16 +104,22 @@ function save() {
   };
 
   try {
-    saveRecord(record);
+    validateRecord(record);
+
+    if (!props.editData) {
+      saveRecord(record);
+    }
 
     emit('save', record);
 
-    // Reset the form
-    payer.value = '';
-    amount.value = null;
-    currency.value = 'EUR';
-    what.value = '';
-    shares.value = [{ who: '', amount: null }];
+    if (!props.editData) {
+      // Reset the form only in create mode
+      payer.value = '';
+      amount.value = null;
+      currency.value = 'EUR';
+      what.value = '';
+      shares.value = [{ who: '', amount: null }];
+    }
   } catch (error) {
     dialog.value?.alert('Error saving record\n' + error);
     return;

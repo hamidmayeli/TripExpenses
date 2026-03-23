@@ -36,6 +36,13 @@ const removeRecord = (index: number) => {
   localStorage.setItem('records', JSON.stringify(records))
 }
 
+const updateRecord = (index: number, record: CostData) => {
+  validateRecord(record)
+  const records = JSON.parse(localStorage.getItem('records') || '[]') as CostData[]
+  records[index] = record
+  localStorage.setItem('records', JSON.stringify(records))
+}
+
 const addLog = (type: 'info' | 'error' | 'warning', message: string, data: object) => {
   const logs = JSON.parse(sessionStorage.getItem('logs') || '[]') as Log[]
   const log: Log = {
@@ -59,4 +66,4 @@ const getLogs = () => {
   })
 }
 
-export { saveRecord, getRecords, removeRecord, addLog, getLogs }
+export { saveRecord, validateRecord, getRecords, removeRecord, updateRecord, addLog, getLogs }
