@@ -2,7 +2,7 @@
   <div class="p-4 space-y-4 gap-4 flex flex-col">
     <div v-for="(cost, index) in costs" :key="index"
       class="border rounded-xl shadow-sm p-4 space-y-2"
-      :class="editIndex !== index ? 'text-gray-300' : ''">
+      :class="editIndex !== index ? 'text-gray-700 dark:text-gray-300' : ''">
 
       <!-- View mode -->
       <template v-if="editIndex !== index">
@@ -18,7 +18,7 @@
             <div class="flex gap-4">
               <div class="text-sm font-medium text-gray-500">Shares:</div>
               <ul class="flex gap-2 space-y-1">
-                <li v-for="(share, i) in cost.shares" :key="i" class="text-gray-400">
+                <li v-for="(share, i) in cost.shares" :key="i" class="text-gray-500 dark:text-gray-400">
                   {{ share.who }}: {{ share.amount ?? 'N/A' }},
                 </li>
               </ul>

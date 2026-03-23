@@ -39,9 +39,9 @@
     </div>
 
     <div class="flex gap-4 items-center">
-      <button @click="addShare" class="bg-gray-600 text-white px-3 py-1 rounded">+ new item</button>
+      <button @click="addShare" class="bg-gray-300 text-gray-800 dark:bg-gray-600 dark:text-white px-3 py-1 rounded">+ new item</button>
       <button @click="save" class="bg-green-600 text-white px-3 py-1 rounded">Save</button>
-      <button v-if="editData" @click="emit('cancel')" class="bg-gray-600 text-white px-3 py-1 rounded">Cancel</button>
+      <button v-if="editData" @click="emit('cancel')" class="bg-gray-300 text-gray-800 dark:bg-gray-600 dark:text-white px-3 py-1 rounded">Cancel</button>
     </div>
     <ConfirmDialog ref="dialog" />
   </div>

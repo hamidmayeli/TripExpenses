@@ -1,8 +1,8 @@
 <template>
-  <div class="p-6 bg-gray-900 min-h-screen text-gray-200">
+  <div class="p-6 bg-gray-50 min-h-screen text-gray-800 dark:bg-gray-900 dark:text-gray-200">
     <h1 class="text-2xl font-bold mb-4">System Logs</h1>
 
-    <div v-if="logs.length === 0" class="text-gray-400">No logs available.</div>
+    <div v-if="logs.length === 0" class="text-gray-500 dark:text-gray-400">No logs available.</div>
 
     <ul v-else class="space-y-4 flex flex-col gap-4">
       <li v-for="(log, index) in logs" :key="index" class="p-4 rounded border shadow" :class="logTypeClass(log.type)">
@@ -12,8 +12,8 @@
             {{ log.type.toUpperCase() }}
           </span>
         </div>
-        <div class="mb-1 text-gray-100">{{ log.message }}</div>
-        <pre class="bg-gray-800 text-gray-300 p-2 rounded text-sm overflow-x-auto">
+        <div class="mb-1 text-gray-800 dark:text-gray-100">{{ log.message }}</div>
+        <pre class="bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300 p-2 rounded text-sm overflow-x-auto">
 {{ formatData(log.data) }}
         </pre>
       </li>
@@ -38,11 +38,11 @@ function formatData(data: object): string {
 function logTypeClass(type: Log['type']): string {
   switch (type) {
     case 'info':
-      return 'border-blue-500 bg-blue-950'
+      return 'border-blue-300 bg-blue-50 dark:border-blue-500 dark:bg-blue-950'
     case 'warning':
-      return 'border-yellow-500 bg-yellow-900'
+      return 'border-yellow-300 bg-yellow-50 dark:border-yellow-500 dark:bg-yellow-900'
     case 'error':
-      return 'border-red-500 bg-red-900'
+      return 'border-red-300 bg-red-50 dark:border-red-500 dark:bg-red-900'
     default:
       return ''
   }
