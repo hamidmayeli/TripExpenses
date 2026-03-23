@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, defineProps, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 interface ExchangeRateResponse {
   rates: Record<string, number>
