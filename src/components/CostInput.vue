@@ -12,7 +12,7 @@
       </label>
       <label class="flex flex-col">
         What
-        <input type="text" v-model.what="what" class="border p-1" />
+        <input type="text" v-model="what" class="border p-1" />
       </label>
       <label class="flex flex-col">
         Currency
